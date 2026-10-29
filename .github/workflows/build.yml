@@ -1,0 +1,18 @@
+name: Build CSQTT Server
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'amurcanov/csqtt'
+          path: 'src'
+      - uses: dtolnay/rust-toolchain@stable
+      - run: |
+          cd src/rust-server
+          cargo build --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: csqtt-server-binary
+          path: src/rust-server/target/release/csqtt
